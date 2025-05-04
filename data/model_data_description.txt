@@ -1,0 +1,49 @@
+Title: Weekly Aggregated Weather Dataset for Precipitation Prediction
+Prepared for: Time Series Modeling
+Prepared by: Muhammad Salman
+Date: 08/04/2025
+
+---
+
+DESCRIPTION:
+This dataset contains weekly aggregated weather information derived from two NOAA weather stations in Massachusetts:
+- Boston Logan International Airport, MA US
+- Jamaica Plain, MA US
+
+The data is structured for supervised machine learning models with the goal of predicting weekly precipitation using historical weather patterns and seasonal context.
+
+---
+
+COLUMNS:
+
+1. Season_Code         → Encoded meteorological season:
+                           0 = Winter, 1 = Spring, 2 = Summer, 3 = Fall
+2. WEEK                → Start date of the week (YYYY-MM-DD)
+3. Avg_Temp_t-2        → Average temperature 2 weeks prior
+4. Avg_Temp_t-1        → Average temperature 1 week prior
+5. Avg_Temp            → Average temperature of the current week
+6. Avg_Precip_t-2      → Average precipitation 2 weeks prior (mean of both stations)
+7. Avg_Precip_t-1      → Average precipitation 1 week prior
+8. Target_Precip_t     → Target variable: average precipitation for the current week
+
+---
+
+PREPROCESSING PIPELINE:
+
+1. Daily data loaded and cleaned. Missing TAVG values were filled using (TMAX + TMIN)/2.
+2. Data from both stations was merged per day, showing both stations' values side-by-side.
+3. Daily averages were computed across the two stations.
+4. Aggregated to weekly granularity (Monday to Sunday).
+5. Generated lag features for 1 and 2 weeks prior (t-1, t-2) for both temperature and precipitation.
+6. Mapped each week's start date to its meteorological season and encoded it numerically.
+7. Final DataFrame was structured to suit supervised learning models.
+
+---
+
+NOTES:
+
+- The dataset is ideal for models like Random Forest, XGBoost, LSTM, or other temporal prediction techniques.
+- Granularity is weekly to balance temporal resolution with noise reduction.
+- Consider normalization or scaling if required by the model.
+
+---
